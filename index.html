@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="shortcut icon" href="./img/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Anton|Russo+One&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Bootstrap -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -17,6 +22,52 @@
     <title>Gif Search Engine</title>
   </head>
   <body>
+    <main>
+      <!-- Title -->
+      <div class="main-header container">
+        <h1 class="text-center">Gif Search Engine</h1>
+
+        <!-- Search bar -->
+        <div class="container">
+          <div class="row justify-content-center">
+            <form class="input-group p-3 col-lg-12 col-8">
+              <input
+                id="keywords"
+                type="text"
+                class="form-control"
+                placeholder="What's on your mind now?"
+                aria-label="What's on your mind now?"
+              />
+              <div class="input-group-append">
+                <button id="search-btn" class="btn py-1 px-md-5" type="search">
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Trending gifs -->
+    <section>
+      <div class="container my-5">
+        <h3 class="text-center">Trending gifs</h3>
+        <div class="row justify-content-center"></div>
+      </div>
+    </section>
+
+    <!-- Search gifs -->
+    <section>
+      <div class="container">
+        <h3 class="text-center my-4">Your searched gifs</h3>
+        <div class="row justify-content-center">
+          <div id="search_output"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Javascript -->
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
