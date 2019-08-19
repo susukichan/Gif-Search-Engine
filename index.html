@@ -32,7 +32,7 @@
           <div class="row justify-content-center">
             <form class="input-group p-3 col-lg-12 col-8">
               <input
-                id="keywords"
+                id="input"
                 type="text"
                 class="form-control"
                 placeholder="What's on your mind now?"
@@ -52,8 +52,10 @@
     <!-- Trending gifs -->
     <section>
       <div class="container my-5">
-        <h3 class="text-center">Trending gifs</h3>
-        <div class="row justify-content-center"></div>
+        <h3 class="text-center my-4">Trending gifs</h3>
+        <div class="row justify-content-center">
+          <div id="trending_output"></div>
+        </div>
       </div>
     </section>
 
@@ -68,11 +70,14 @@
     </section>
 
     <!-- Javascript -->
+    <!-- Bootstrap -->
     <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+    <!-- Isotope -->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

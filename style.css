@@ -56,7 +56,8 @@ body {
   );
 }
 
-#search_output img {
+#search_output img,
+#trending_output img {
   max-height: 150px;
   width: auto;
   margin: 0.1rem;

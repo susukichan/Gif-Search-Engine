@@ -7,22 +7,19 @@
 
 const btn = document.getElementById("search-btn");
 const search_output = document.getElementById("search_output");
+const trending_output = document.getElementById("trending_output");
 const APIkey = "nIYljTr6swIVRCxmLmspJGL1QCdLMSR4";
-const keywords = document.getElementById("keywords");
+const input = document.getElementById("input");
 const numOfGifs = 60;
 
-btn.addEventListener("click", getGifs);
+document.addEventListener("DOMContentLoaded", trendingGifs);
 
-function getGifs(e) {
-  console.log("get gifs");
-
+function trendingGifs(e) {
   const xhr = new XMLHttpRequest();
 
   xhr.open(
     "GET",
-    `http://api.giphy.com/v1/gifs/search?q=${
-      keywords.value
-    }&api_key=${APIkey}&limit=${numOfGifs}`,
+    `http://api.giphy.com/v1/gifs/trending?api_key=${APIkey}&limit=10`,
     true
   );
 
@@ -30,11 +27,41 @@ function getGifs(e) {
     if (this.status >= 200 && this.status < 400) {
       const response = JSON.parse(this.responseText);
 
-      let gifs_array = response.data;
+      let trendingGifs_array = response.data;
 
-      for (const i in gifs_array) {
-        search_output.innerHTML +=
-          "<img src='" + gifs_array[i].images.original.url + "' />";
+      for (const i in trendingGifs_array) {
+        trending_output.innerHTML += `
+          <img src="${trendingGifs_array[i].images.original.url}" />
+          `;
+      }
+    }
+  };
+  xhr.send();
+}
+
+function getSearchedGifs(e) {
+  let keywords = input.value;
+  keywordsquery = keywords.replace(" ", "+");
+  console.log(keywordsquery);
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.open(
+    "GET",
+    `http://api.giphy.com/v1/gifs/search?q=${keywordsquery}&api_key=${APIkey}&limit=${numOfGifs}`,
+    true
+  );
+
+  xhr.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      const response = JSON.parse(this.responseText);
+
+      let searchedGifs_array = response.data;
+
+      for (const i in searchedGifs_array) {
+        search_output.innerHTML += `<img src="${
+          searchedGifs_array[i].images.original.url
+        }" />`;
       }
     }
   };
@@ -43,3 +70,15 @@ function getGifs(e) {
 
   e.preventDefault();
 }
+
+btn.addEventListener("click", getSearchedGifs);
+
+// Isotope
+// var grid = document.querySelector(".grid");
+// var iso = new Isotope(grid, {
+//   // options...
+//   itemSelector: ".grid-item",
+//   masonry: {
+//     columnWidth: 200
+//   }
+// });
