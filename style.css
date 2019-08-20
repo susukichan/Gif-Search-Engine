@@ -56,9 +56,17 @@ body {
   );
 }
 
-#search_output img,
-#trending_output img {
-  max-height: 150px;
+.gif-output {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.gif-output__img {
+  /* max-height: 9rem; */
+  flex: 1 1 auto;
+}
+
+.logo {
+  max-height: 80px;
   width: auto;
-  margin: 0.1rem;
 }

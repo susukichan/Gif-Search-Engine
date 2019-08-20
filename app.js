@@ -1,84 +1,88 @@
-// var xhr = $.get(
-//   "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=nIYljTr6swIVRCxmLmspJGL1QCdLMSR4&limit=30"
-// );
-// xhr.done(function(giphy) {
-//   console.log("success got data", giphy);
-// });
+//-- Constants --------------------------------------------------------
+const API_KEY = "nIYljTr6swIVRCxmLmspJGL1QCdLMSR4";
+const NUM_OF_GIFS = 60;
+const TRENDING_URL = `http://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=10`;
 
-const btn = document.getElementById("search-btn");
-const search_output = document.getElementById("search_output");
-const trending_output = document.getElementById("trending_output");
-const APIkey = "nIYljTr6swIVRCxmLmspJGL1QCdLMSR4";
-const input = document.getElementById("input");
-const numOfGifs = 60;
+//-- Dom Handles ------------------------------------------------------
+const $form = document.getElementById("search-form");
+const $input = document.getElementById("search-input");
+const $gifOutputTitle = document.getElementById("gif-output__title");
+const $gifOutput = document.getElementById("gif-output");
 
-document.addEventListener("DOMContentLoaded", trendingGifs);
+//-- State  -----------------------------------------------------------
+const titles = {
+  onSearch: "Here is your gifs",
+  onTrending: "Trending gifs",
+  onLoading: "Please wait... ⌛",
+  onError: "Something went wrong"
+};
 
-function trendingGifs(e) {
-  const xhr = new XMLHttpRequest();
+let state = {
+  query: "",
+  queryURL: ""
+};
 
-  xhr.open(
-    "GET",
-    `http://api.giphy.com/v1/gifs/trending?api_key=${APIkey}&limit=10`,
-    true
-  );
+//-- Program ----------------------------------------------------------
+const makeQueryURL = keywords =>
+  `http://api.giphy.com/v1/gifs/search?q=${keywords.replace(
+    " ",
+    "+"
+  )}&api_key=${API_KEY}&limit=${NUM_OF_GIFS}`;
 
-  xhr.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-      const response = JSON.parse(this.responseText);
+const updateTitle = title => ($gifOutputTitle.innerText = title);
+const updateGifs = s => ($gifOutput.innerHTML = s);
 
-      let trendingGifs_array = response.data;
+const handleCatch = err => {
+  updateTitle(titles.onError);
+  updateGifs("");
+  console.error(err);
+};
 
-      for (const i in trendingGifs_array) {
-        trending_output.innerHTML += `
-          <img src="${trendingGifs_array[i].images.original.url}" />
-          `;
+const fetchAndUpdateDom = url => {
+  updateTitle(titles.onLoading);
+  return fetch(url)
+    .then(x => x.json())
+    .then(x => {
+      if (x.data.length === 0) {
+        throw new Error("No results found");
       }
-    }
+
+      const htmls = x.data.map(
+        gifMetaData =>
+          `<img class="gif-output__img" src="${
+            gifMetaData.images.fixed_height.url
+          }" />`
+      );
+
+      updateGifs(htmls.join(""));
+    });
+};
+
+$input.addEventListener("keyup", event => {
+  state = {
+    ...state,
+    query: event.currentTarget.value,
+    queryURL: makeQueryURL(event.currentTarget.value)
   };
-  xhr.send();
-}
+});
 
-function getSearchedGifs(e) {
-  let keywords = input.value;
-  keywordsquery = keywords.replace(" ", "+");
-  console.log(keywordsquery);
+$form.addEventListener("submit", event => {
+  event.preventDefault();
 
-  const xhr = new XMLHttpRequest();
+  const [title, url] =
+    state.query === ""
+      ? [titles.onTrending, TRENDING_URL]
+      : [titles.onSearch, state.queryURL];
 
-  xhr.open(
-    "GET",
-    `http://api.giphy.com/v1/gifs/search?q=${keywordsquery}&api_key=${APIkey}&limit=${numOfGifs}`,
-    true
-  );
+  fetchAndUpdateDom(url)
+    .then(() => updateTitle(title))
+    .catch(handleCatch);
+});
 
-  xhr.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-      const response = JSON.parse(this.responseText);
+const main = () => {
+  fetchAndUpdateDom(TRENDING_URL)
+    .then(() => updateTitle(titles.onTrending))
+    .catch(handleCatch);
+};
 
-      let searchedGifs_array = response.data;
-
-      for (const i in searchedGifs_array) {
-        search_output.innerHTML += `<img src="${
-          searchedGifs_array[i].images.original.url
-        }" />`;
-      }
-    }
-  };
-
-  xhr.send();
-
-  e.preventDefault();
-}
-
-btn.addEventListener("click", getSearchedGifs);
-
-// Isotope
-// var grid = document.querySelector(".grid");
-// var iso = new Isotope(grid, {
-//   // options...
-//   itemSelector: ".grid-item",
-//   masonry: {
-//     columnWidth: 200
-//   }
-// });
+main();

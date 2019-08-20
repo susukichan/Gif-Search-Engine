@@ -30,9 +30,9 @@
         <!-- Search bar -->
         <div class="container">
           <div class="row justify-content-center">
-            <form class="input-group p-3 col-lg-12 col-8">
+            <form id="search-form" class="input-group p-3 col-lg-12 col-8" action="">
               <input
-                id="input"
+                id="search-input"
                 type="text"
                 class="form-control"
                 placeholder="What's on your mind now?"
@@ -52,22 +52,19 @@
     <!-- Trending gifs -->
     <section>
       <div class="container my-5">
-        <h3 class="text-center my-4">Trending gifs</h3>
-        <div class="row justify-content-center">
-          <div id="trending_output"></div>
-        </div>
+        <h3 id="gif-output__title" class="text-center my-4">Trending gifs</h3>
+          <div id="gif-output" class="gif-output"></div>
       </div>
     </section>
 
-    <!-- Search gifs -->
-    <section>
+    <!-- footer -->
+    <footer>
       <div class="container">
-        <h3 class="text-center my-4">Your searched gifs</h3>
-        <div class="row justify-content-center">
-          <div id="search_output"></div>
+        <h5 class="text-center my-4">The app is powered by
+        <img src="/img/giphy_logo.gif" class="logo mx-auto" alt=""></h5>
         </div>
       </div>
-    </section>
+    </footer>
 
     <!-- Javascript -->
     <!-- Bootstrap -->
@@ -76,8 +73,6 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    <!-- Isotope -->
-    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
