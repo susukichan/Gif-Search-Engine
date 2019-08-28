@@ -2,7 +2,7 @@
 
 ![Alt text](img/giphy.gif?raw=true)
 
-This is single-page Gif Search Engine powered by GIPHY API. When a user lands on the page, they should be able to see the trending Gif images from GIPHY. They can also search for the gifs they want. In this project, I used little bit of Bootstrap and flexbox for the layout, vanilla Javascript for fetching the API and interaction.
+This is single-page Gif Search Engine powered by GIPHY API. It embraces the 90's website aestheitcs: gif heavy, flashy background, over saturated colors and the internet meme Nyan Cat. When a user lands on the page, they should be able to see the trending Gif images from GIPHY. They can also search for the gifs they want. In this project, I used little bit of Bootstrap and flexbox for the layout, vanilla Javascript for fetching the API and interaction.
 
 ## 💡 How to use
 
