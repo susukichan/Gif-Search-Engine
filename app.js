@@ -1,7 +1,7 @@
 //-- Constants --------------------------------------------------------
 const API_KEY = "nIYljTr6swIVRCxmLmspJGL1QCdLMSR4";
 const NUM_OF_GIFS = 60;
-const TRENDING_URL = `http://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=10`;
+const TRENDING_URL = `https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}&limit=10`;
 
 //-- Dom Handles ------------------------------------------------------
 const $form = document.getElementById("search-form");
@@ -24,7 +24,7 @@ let state = {
 
 //-- Program ----------------------------------------------------------
 const makeQueryURL = keywords =>
-  `http://api.giphy.com/v1/gifs/search?q=${keywords.replace(
+  `https://api.giphy.com/v1/gifs/search?q=${keywords.replace(
     " ",
     "+"
   )}&api_key=${API_KEY}&limit=${NUM_OF_GIFS}`;
@@ -49,9 +49,7 @@ const fetchAndUpdateDom = url => {
 
       const htmls = x.data.map(
         gifMetaData =>
-          `<img class="gif-output__img" src="${
-            gifMetaData.images.fixed_height.url
-          }" />`
+          `<img class="gif-output__img" src="${gifMetaData.images.fixed_height.url}" />`
       );
 
       updateGifs(htmls.join(""));
